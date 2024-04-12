@@ -7,7 +7,10 @@ fn main() {
     println!("cargo:rerun-if-changed=external/jigsaw/src/jigsaw.cpp");
     println!("cargo:rustc-link-lib=static=jigsaw");
     println!("cargo:rustc-link-lib=stdc++");
-    println!("cargo:rustc-link-search=native={}", out_path.display());
+    println!(
+        "cargo:rustc-link-search=native={}",
+        out_path.canonicalize().unwrap().display()
+    );
     cc::Build::new()
         .cpp(true)
         .file("external/jigsaw/src/jigsaw.cpp")
